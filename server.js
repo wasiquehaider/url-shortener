@@ -83,7 +83,7 @@ app.use("/api/shorturl/new", function (req, res,next) {
   }
 });
 
-app.get('/api/shoturl', function (req, res,next) {
+app.get('/api/shorturl', function (req, res,next) {
 urlModel.find()
   .exec()
   .then(docs => {
@@ -96,7 +96,7 @@ urlModel.find()
 })
 
 //shortcut URL
-app.get('/api/shoturl/:short', function (req, res,next) {
+app.get('/api/shorturl/:short', function (req, res,next) {
 console.log(req.params.short)
   let short = req.params.short
   urlModel.find({"id": short}).exec()
