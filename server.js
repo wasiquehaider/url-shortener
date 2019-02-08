@@ -52,6 +52,7 @@ app.post("/api/shorturl/new", function (req, res,next) {
   completeAction();
   }
   })
+  // res.send('HELLo')
   
   function completeAction() {
   urlModel.find().exec()
