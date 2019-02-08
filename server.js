@@ -56,7 +56,23 @@ app.post("/api/shorturl/new", function (req, res,next) {
   function completeAction() {
   urlModel.find().exec()
     .then(docs => {
-      theData = docs
+      theData = docs;
+      var doc = new urlModel({"id":theData.length, "url": req.body.url});
+      theData = theData.filter((obj) => obj["url"] === req.body.url)
+      // check the url if it is already in DB
+    if(theData.length === 0){
+    doc.save()
+      .then(result => {
+      res.json(result)
+      })
+      .catch(err => {
+      console.log(err)
+      res.json({"error": err})
+    })
+    }else{
+    res.json({"error": `URL ALREADY IN DATABASE as ${theData[0].id}`})
+    }
+  
   })
   
   }
