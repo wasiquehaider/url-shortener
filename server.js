@@ -3,8 +3,9 @@
 var express = require('express');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-
+var bodyParser = require('body-parser');
 var cors = require('cors');
+var dns = require('dns');
 
 var app = express();
 
@@ -15,14 +16,14 @@ var port = process.env.PORT || 3000;
 mongoose.connect(process.env.MONGOLAB_URI);
 
 app.use(cors());
+app.use(bodyParser.json())
 
 // URL SCHEMA
-
 var urlSchema = new mongoose.Schema({
-      orig_url: { type: String, required: true },
-      short_url: Number
+      id: Number,
+      url: String
   });
-var URL = mongoose.model('URL', urlSchema);
+var UrlModel = mongoose.model('URL', urlSchema);
 
 /** this project needs to parse POST bodies **/
 // you should mount the body-parser here
