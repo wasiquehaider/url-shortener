@@ -25,6 +25,9 @@ var urlModel = mongoose.model('URL', urlSchema);
 /** this project needs to parse POST bodies **/
 // you should mount the body-parser here
 app.use(cors());
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
 app.use(bodyParser.json())
 app.use('/public', express.static(process.cwd() + '/public'));
 
@@ -38,19 +41,19 @@ app.get("/api/hello", function (req, res) {
 });
 
 //POST URL To Shorten 
-app.post("/api/shorturl/new", function (req, res,next) {
+app.use("/api/shorturl/new", function (req, res,next) {
   let originalUrl = req.body;
   let theData;
   
   let urlRegex = /https:\/\/www.|http:\/\/www./g;
-  // dns.lookup(req.body.url.replace(urlRegex,''), (err,address,family)=>{
-  // if(err){
-  //   res.json({"error": err})
-  // }else{
-  // completeAction();
-  // }
-  // })
-  res.json({"URL" :req.body.url, "NAME" :req.body.ur})
+  dns.lookup(req.body.url.replace(urlRegex,''), (err,address,family)=>{
+  if(err){
+    res.json({"error": err})
+  }else{
+  completeAction();
+  }
+  })
+  // res.json({"URL" :req.body.url, "NAME" :req.body.name})
   
   function completeAction() {
   urlModel.find().exec()
