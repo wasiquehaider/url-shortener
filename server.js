@@ -12,9 +12,17 @@ var app = express();
 var port = process.env.PORT || 3000;
 
 /** this project needs a db !! **/ 
-// mongoose.connect(process.env.MONGOLAB_URI);
+mongoose.connect(process.env.MONGOLAB_URI);
 
 app.use(cors());
+
+// URL SCHEMA
+
+var urlSchema = new mongoose.Schema({
+      orig_url: { type: String, required: true },
+      short_url: Number
+  });
+var URL = mongoose.model('URL', urlSchema);
 
 /** this project needs to parse POST bodies **/
 // you should mount the body-parser here
@@ -24,6 +32,14 @@ app.use('/public', express.static(process.cwd() + '/public'));
 app.get('/', function(req, res){
   res.sendFile(process.cwd() + '/views/index.html');
 });
+
+//POST URL 
+
+app.post("/api/shorturl/new", function (req, res,next) {
+  
+});
+
+
 
   
 // your first API endpoint... 
