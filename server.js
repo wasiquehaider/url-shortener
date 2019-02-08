@@ -74,9 +74,40 @@ app.post("/api/shorturl/new", function (req, res,next) {
     }
   
   })
-  
+    .catch(err => {
+    console.log(err)
+      res.json({"error": err})
+    })
   }
 });
+
+app.get('/api/shoturl', function (req, res,next) {
+urlModel.find()
+  .exec()
+  .then(docs => {
+  res.json(docs)
+})
+  .catch(err => {
+      console.log(err)
+      res.json({"error": err})
+})
+})
+
+//shortcut URL
+app.get('/api/shoturl/:short', function (req, res,next) {
+console.log(req.params.short)
+  let short = req.params.short
+  urlModel.find({"id": short}).exec()
+  .then(docs => {
+  res.redirect(docs[0]["url"])
+  })
+  .catch(err => {
+      console.log(err)
+      res.json({"error": err})
+})
+})
+
+
 
 
 
